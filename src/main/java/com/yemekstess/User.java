@@ -1,3 +1,5 @@
+// User entity class
+
 package com.yemekstess;
 
 public class User {
