@@ -1,4 +1,5 @@
 package com.yemekstess;
+// Customer entity class
 
 public class Customer extends User {
     private String name;
