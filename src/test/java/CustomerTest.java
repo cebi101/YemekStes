@@ -8,7 +8,8 @@ class CustomerTest {
     void customerCreationTest() {
         Customer customer =
                 new Customer("c1", "123", "Veli", "Ankara", "5555", "X");
+
         assertNotNull(customer);
+        assertEquals("Ankara", customer.getCity());
     }
 }
-
