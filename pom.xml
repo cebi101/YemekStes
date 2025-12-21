@@ -9,6 +9,9 @@
     <artifactId>YemekStes</artifactId>
     <version>1.0-SNAPSHOT</version>
 
+    <name>YemekStes</name>
+    <description>Food ordering system developed with Java OOP and JUnit</description>
+
     <properties>
         <maven.compiler.source>21</maven.compiler.source>
         <maven.compiler.target>21</maven.compiler.target>
