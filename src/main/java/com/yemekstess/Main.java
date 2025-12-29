@@ -1,33 +1,18 @@
+
 package com.yemekstess;
 
+import java.util.List;
 import java.util.Scanner;
 
 public class Main {
 
     public static void main(String[] args) {
+
         Scanner scanner = new Scanner(System.in);
 
-        printWelcome();
-
-        Customer musteri = createCustomer(scanner);
-        Restaurant restoran = createRestaurant();
-
-        restoran.showMenu();
-
-        Order siparis = new Order(musteri);
-        takeOrder(scanner, restoran, siparis);
-        applyCoupon(scanner, siparis);
-
-        finalizeOrder(musteri, siparis);
-
-        scanner.close();
-    }
-
-    private static void printWelcome() {
         System.out.println("======= YEMEK SİPARİŞ SİTESİNE HOŞ GELDİNİZ =======\n");
-    }
 
-    private static Customer createCustomer(Scanner scanner) {
+        // Kullanıcı bilgileri
         System.out.print("Kullanıcı adı: ");
         String username = scanner.nextLine();
 
@@ -46,21 +31,26 @@ public class Main {
         System.out.print("Adresiniz: ");
         String address = scanner.nextLine();
 
-        return new Customer(username, password, name, city, phone, address);
-    }
+        Customer musteri = new Customer(username, password, name, city, phone, address);
 
-    private static Restaurant createRestaurant() {
+        // Restoran ve menü
         Restaurant restoran = new Restaurant("YemekSitesi");
 
+        // Yemekler
         restoran.addFood(new MenuItem("Burger", 80));
         restoran.addFood(new MenuItem("Pizza", 100));
         restoran.addFood(new MenuItem("Lahmacun", 65));
         restoran.addFood(new MenuItem("Döner", 120));
+        restoran.addFood(new MenuItem("Kebap", 150));
+        restoran.addFood(new MenuItem("Mantı", 90));
 
+        // Atıştırmalıklar
         restoran.addSnack(new MenuItem("Patates Kızartması", 35));
         restoran.addSnack(new MenuItem("Soğan Halkası", 30));
         restoran.addSnack(new MenuItem("Mozzarella Stick", 45));
+        restoran.addSnack(new MenuItem("Sigara Böreği", 40));
 
+        // İçecekler
         restoran.addDrink(new DrinkItem("Kola", 15, "Küçük"));
         restoran.addDrink(new DrinkItem("Kola", 18, "Orta"));
         restoran.addDrink(new DrinkItem("Kola", 22, "Büyük"));
@@ -73,48 +63,62 @@ public class Main {
         restoran.addDrink(new DrinkItem("Ice Tea", 24, "Orta"));
         restoran.addDrink(new DrinkItem("Ice Tea", 28, "Büyük"));
 
+        // Tatlılar
         restoran.addDessert(new MenuItem("Sufle", 45));
         restoran.addDessert(new MenuItem("Magnolia", 50));
         restoran.addDessert(new MenuItem("Profiterol", 48));
         restoran.addDessert(new MenuItem("Cheesecake", 55));
+        restoran.addDessert(new MenuItem("Baklava", 60));
 
-        return restoran;
-    }
+        Order siparis = new Order(musteri);
 
-    private static void takeOrder(Scanner scanner, Restaurant restoran, Order siparis) {
-        System.out.println("\nSepete ürün eklemek için ürün numarasını girin.");
-        System.out.println("Bitirmek için -1 yazın.");
+        boolean devam = true;
 
-        int secim = 0;
-        while (secim != -1) {
+        while (devam) {
+            System.out.println("\nKategori seçiniz:");
+            System.out.println("1 - Yemekler");
+            System.out.println("2 - Atıştırmalıklar");
+            System.out.println("3 - İçecekler");
+            System.out.println("4 - Tatlılar");
+            System.out.println("0 - Siparişi Bitir");
+
             System.out.print("Seçim: ");
-            secim = scanner.nextInt();
+            int kategori = scanner.nextInt();
 
-            if (secim == -1) break;
+            if (kategori == 0) {
+                devam = false;
+                break;
+            }
 
-            if (secim >= 1 && secim <= restoran.getFullMenu().size()) {
-                MenuItem item = restoran.getFullMenu().get(secim - 1);
-                siparis.addItem(item);
+            restoran.showMenu(); // Mevcut menüyü gösteriyoruz
+
+            System.out.print("Eklemek istediğiniz ürün numarası: ");
+            int urunNo = scanner.nextInt();
+
+            List<MenuItem> menu = restoran.getFullMenu();
+
+            if (urunNo >= 1 && urunNo <= menu.size()) {
+                siparis.addItem(menu.get(urunNo - 1));
             } else {
-                System.out.println("Geçersiz seçim!");
+                System.out.println("Geçersiz ürün numarası!");
             }
         }
-        scanner.nextLine(); // buffer temizleme
-    }
 
-    private static void applyCoupon(Scanner scanner, Order siparis) {
+        scanner.nextLine(); // buffer temizliği
+
         System.out.print("\nKupon kodunuz var mı? Yoksa 'yok' yazın: ");
         String kupon = scanner.nextLine();
 
         if (!kupon.equalsIgnoreCase("yok")) {
             siparis.applyCoupon(kupon);
         }
-    }
 
-    private static void finalizeOrder(Customer musteri, Order siparis) {
         System.out.println("\nSipariş onaylandı!");
         System.out.println("Kullanıcı adı: " + musteri.getUsername());
         siparis.placeOrder();
+
+        scanner.close();
     }
 }
+
 
