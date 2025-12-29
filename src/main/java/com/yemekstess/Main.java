@@ -66,7 +66,9 @@ public class Main {
             System.out.print("Seçim: ");
             int kategori = scanner.nextInt();
 
-            if (kategori == 0) break;
+            if (kategori == 0) {
+                break; // sadece döngüden çıkar
+            }
 
             List<MenuItem> secilenMenu;
             String kategoriAdi;
@@ -109,7 +111,7 @@ public class Main {
             }
         }
 
-        scanner.nextLine();
+        scanner.nextLine(); // buffer temizliği
 
         System.out.print("\nKupon kodunuz var mı? Yoksa 'yok' yazın: ");
         String kupon = scanner.nextLine();
@@ -117,9 +119,11 @@ public class Main {
             siparis.applyCoupon(kupon);
         }
 
-        System.out.println("\nSipariş onaylandı!");
+        // ❗ Sipariş onay mesajı ARTIK BURADA YOK
+        // Kontrol tamamen Order içinde
         siparis.placeOrder();
 
         scanner.close();
     }
 }
+
