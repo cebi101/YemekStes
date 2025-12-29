@@ -3,25 +3,36 @@ package com.yemekstess;
 import java.util.Scanner;
 
 public class Main {
-    public static void main(String[] args) {
 
+    public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
+        printWelcome();
+
+        Customer musteri = createCustomer(scanner);
+        Restaurant restoran = createRestaurant();
+
+        restoran.showMenu();
+
+        Order siparis = new Order(musteri);
+        takeOrder(scanner, restoran, siparis);
+        applyCoupon(scanner, siparis);
+
+        finalizeOrder(musteri, siparis);
+
+        scanner.close();
+    }
+
+    private static void printWelcome() {
         System.out.println("======= YEMEK SİPARİŞ SİTESİNE HOŞ GELDİNİZ =======\n");
+    }
 
-        // ==============================
-        //     GİRİŞ BİLGİLERİ ALINIYOR
-        // ==============================
-
+    private static Customer createCustomer(Scanner scanner) {
         System.out.print("Kullanıcı adı: ");
         String username = scanner.nextLine();
 
         System.out.print("Şifre: ");
         String password = scanner.nextLine();
-
-        // ==============================
-        //   MÜŞTERİ BİLGİLERİ ALINIYOR
-        // ==============================
 
         System.out.print("Adınız: ");
         String name = scanner.nextLine();
@@ -35,9 +46,10 @@ public class Main {
         System.out.print("Adresiniz: ");
         String address = scanner.nextLine();
 
-        // Customer, artık User'dan türediği için hem login hem müşteri bilgilerini alıyor
-        Customer musteri = new Customer(username, password, name, city, phone, address);
+        return new Customer(username, password, name, city, phone, address);
+    }
 
+    private static Restaurant createRestaurant() {
         Restaurant restoran = new Restaurant("YemekSitesi");
 
         restoran.addFood(new MenuItem("Burger", 80));
@@ -66,15 +78,14 @@ public class Main {
         restoran.addDessert(new MenuItem("Profiterol", 48));
         restoran.addDessert(new MenuItem("Cheesecake", 55));
 
-        restoran.showMenu();
+        return restoran;
+    }
 
-        Order siparis = new Order(musteri);
-
+    private static void takeOrder(Scanner scanner, Restaurant restoran, Order siparis) {
         System.out.println("\nSepete ürün eklemek için ürün numarasını girin.");
         System.out.println("Bitirmek için -1 yazın.");
 
         int secim = 0;
-
         while (secim != -1) {
             System.out.print("Seçim: ");
             secim = scanner.nextInt();
@@ -88,20 +99,22 @@ public class Main {
                 System.out.println("Geçersiz seçim!");
             }
         }
+        scanner.nextLine(); // buffer temizleme
+    }
 
-        scanner.nextLine(); // Boş satır temizliği
-
+    private static void applyCoupon(Scanner scanner, Order siparis) {
         System.out.print("\nKupon kodunuz var mı? Yoksa 'yok' yazın: ");
         String kupon = scanner.nextLine();
 
         if (!kupon.equalsIgnoreCase("yok")) {
             siparis.applyCoupon(kupon);
         }
+    }
 
+    private static void finalizeOrder(Customer musteri, Order siparis) {
         System.out.println("\nSipariş onaylandı!");
-        System.out.println("Kullanıcı adı: " + musteri.getUsername()); // User bilgisi geldi!
+        System.out.println("Kullanıcı adı: " + musteri.getUsername());
         siparis.placeOrder();
-
-        scanner.close();
     }
 }
+
