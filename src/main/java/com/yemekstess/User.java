@@ -1,5 +1,3 @@
-// User entity class
-
 package com.yemekstess;
 
 public class User {
@@ -14,5 +12,13 @@ public class User {
 
     public String getUsername() {
         return username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public boolean checkPassword(String inputPassword) {
+        return this.password.equals(inputPassword);
     }
 }
