@@ -24,18 +24,23 @@ public class Order {
         if (code.equalsIgnoreCase("INDIRIM10")) {
             discount = totalAmount * 0.10;
             System.out.println("%10 indirim uygulandı!");
-        }
-        else if (code.equalsIgnoreCase("INDIRIM20")) {
+        } else if (code.equalsIgnoreCase("INDIRIM20")) {
             discount = totalAmount * 0.20;
             System.out.println("%20 indirim uygulandı!");
-        }
-        else {
+        } else {
             System.out.println("Geçersiz kupon kodu!");
         }
     }
 
     public void placeOrder() {
-        System.out.println("\nSipariş onaylandı!");
+
+        // 🔴 KRİTİK KURAL
+        if (items.isEmpty()) {
+            System.out.println("\n⚠️ Sepetiniz boş. Sipariş oluşturulamadı.");
+            return;
+        }
+
+        System.out.println("\nSipariş başarıyla oluşturuldu.");
         System.out.println("Müşteri: " + customer.getName());
         System.out.println("Adres: " + customer.getAddress());
         System.out.println("Telefon: " + customer.getPhone());
@@ -48,3 +53,4 @@ public class Order {
         System.out.println("Ödenecek Tutar: " + finalPrice + " TL");
     }
 }
+
