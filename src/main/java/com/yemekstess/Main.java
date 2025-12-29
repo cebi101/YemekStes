@@ -47,14 +47,15 @@ public class Main {
         List<MenuItem> drinks = new ArrayList<>();
         drinks.add(new DrinkItem("Kola", 15, "Küçük"));
         drinks.add(new DrinkItem("Ayran", 12, "Küçük"));
+        drinks.add(new DrinkItem("Kola", 20, "Büyük"));
+        drinks.add(new DrinkItem("Ayran", 15, "Büyük"));
+        drinks.add(new DrinkItem("Ice Tea", 15, "Küçük"));
 
         List<MenuItem> desserts = new ArrayList<>();
         desserts.add(new MenuItem("Sufle", 45));
         desserts.add(new MenuItem("Cheesecake", 55));
 
-        boolean devam = true;
-
-        while (devam) {
+        while (true) {
             System.out.println("\nKategori seçiniz:");
             System.out.println("1 - Yemekler");
             System.out.println("2 - Atıştırmalıklar");
@@ -67,20 +68,33 @@ public class Main {
 
             if (kategori == 0) break;
 
-            List<MenuItem> secilenMenu = null;
+            List<MenuItem> secilenMenu;
+            String kategoriAdi;
 
             switch (kategori) {
-                case 1 -> secilenMenu = foods;
-                case 2 -> secilenMenu = snacks;
-                case 3 -> secilenMenu = drinks;
-                case 4 -> secilenMenu = desserts;
+                case 1 -> {
+                    secilenMenu = foods;
+                    kategoriAdi = "YEMEKLER";
+                }
+                case 2 -> {
+                    secilenMenu = snacks;
+                    kategoriAdi = "ATIŞTIRMALIKLAR";
+                }
+                case 3 -> {
+                    secilenMenu = drinks;
+                    kategoriAdi = "İÇECEKLER";
+                }
+                case 4 -> {
+                    secilenMenu = desserts;
+                    kategoriAdi = "TATLILAR";
+                }
                 default -> {
                     System.out.println("❌ Geçersiz kategori!");
                     continue;
                 }
             }
 
-            System.out.println("\n--- SEÇİLEN KATEGORİ ---");
+            System.out.println("\n--- SEÇİLEN KATEGORİ: " + kategoriAdi + " ---");
             for (int i = 0; i < secilenMenu.size(); i++) {
                 System.out.println((i + 1) + ") " + secilenMenu.get(i));
             }
@@ -109,5 +123,3 @@ public class Main {
         scanner.close();
     }
 }
-
-
