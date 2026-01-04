@@ -12,10 +12,10 @@ public class Main {
 
         Scanner scanner = new Scanner(System.in);
 
-        // 🔹 CSV için sipariş listesi
+        // CSV için sipariş listesi
         List<Order> orders = new ArrayList<>();
 
-        // 🔹 Program kapanırken CSV'ye kaydet
+        // Program kapanırken CSV'ye kaydet
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {
             OrderCsvStore.saveOrders(orders);
         }));
@@ -43,7 +43,7 @@ public class Main {
         Customer musteri = new Customer(username, password, name, city, phone, address);
         Order siparis = new Order(musteri);
 
-        // 🔹 Siparişi listeye ekle (CSV için)
+        // Siparişi CSV listesine ekle
         orders.add(siparis);
 
         // MENÜLER
@@ -126,10 +126,13 @@ public class Main {
 
         scanner.nextLine(); // buffer temizliği
 
-        System.out.print("\nKupon kodunuz var mı? Yoksa 'yok' yazın: ");
-        String kupon = scanner.nextLine();
-        if (!kupon.equalsIgnoreCase("yok")) {
-            siparis.applyCoupon(kupon);
+        // ✅ SADECE SEPET DOLUYSA KUPON SOR
+        if (siparis.hasItems()) {
+            System.out.print("\nKupon kodunuz var mı? Yoksa 'yok' yazın: ");
+            String kupon = scanner.nextLine();
+            if (!kupon.equalsIgnoreCase("yok")) {
+                siparis.applyCoupon(kupon);
+            }
         }
 
         siparis.placeOrder();
@@ -137,5 +140,6 @@ public class Main {
         scanner.close();
     }
 }
+
 
 

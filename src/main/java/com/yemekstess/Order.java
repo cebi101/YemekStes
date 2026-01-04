@@ -53,7 +53,11 @@ public class Order {
         System.out.println("Ödenecek Tutar: " + finalPrice + " TL");
     }
 
-    /* === CSV için EKLENEN GETTER'LAR (sadece okuma) === */
+    /* === AKIŞ KONTROLÜ VE CSV İÇİN EKLENEN METOTLAR === */
+
+    public boolean hasItems() {
+        return !items.isEmpty();
+    }
 
     public Customer getCustomer() {
         return customer;
