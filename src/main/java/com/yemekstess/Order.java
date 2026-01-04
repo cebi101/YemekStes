@@ -53,11 +53,20 @@ public class Order {
         System.out.println("Ödenecek Tutar: " + finalPrice + " TL");
     }
 
-    /* === AKIŞ KONTROLÜ VE CSV İÇİN EKLENEN METOTLAR === */
+    /* =======================
+       GETTER / TEST DESTEK
+       ======================= */
+
+
+    public List<MenuItem> getItems() {
+        return items;
+    }
+
 
     public boolean hasItems() {
         return !items.isEmpty();
     }
+
 
     public Customer getCustomer() {
         return customer;
@@ -71,5 +80,6 @@ public class Order {
         return discount;
     }
 }
+
 
 
