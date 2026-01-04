@@ -52,5 +52,20 @@ public class Order {
         System.out.println("İndirim: -" + discount + " TL");
         System.out.println("Ödenecek Tutar: " + finalPrice + " TL");
     }
+
+    /* === CSV için EKLENEN GETTER'LAR (sadece okuma) === */
+
+    public Customer getCustomer() {
+        return customer;
+    }
+
+    public double getTotalAmount() {
+        return totalAmount;
+    }
+
+    public double getDiscount() {
+        return discount;
+    }
 }
+
 

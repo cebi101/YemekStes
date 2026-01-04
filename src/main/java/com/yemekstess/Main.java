@@ -1,5 +1,7 @@
 package com.yemekstess;
 
+import com.yemekstess.persistence.csv.OrderCsvStore;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -9,6 +11,14 @@ public class Main {
     public static void main(String[] args) {
 
         Scanner scanner = new Scanner(System.in);
+
+        // 🔹 CSV için sipariş listesi
+        List<Order> orders = new ArrayList<>();
+
+        // 🔹 Program kapanırken CSV'ye kaydet
+        Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+            OrderCsvStore.saveOrders(orders);
+        }));
 
         System.out.println("======= YEMEK SİPARİŞ SİTESİNE HOŞ GELDİNİZ =======\n");
 
@@ -32,6 +42,9 @@ public class Main {
 
         Customer musteri = new Customer(username, password, name, city, phone, address);
         Order siparis = new Order(musteri);
+
+        // 🔹 Siparişi listeye ekle (CSV için)
+        orders.add(siparis);
 
         // MENÜLER
         List<MenuItem> foods = new ArrayList<>();
@@ -67,7 +80,7 @@ public class Main {
             int kategori = scanner.nextInt();
 
             if (kategori == 0) {
-                break; // sadece döngüden çıkar
+                break;
             }
 
             List<MenuItem> secilenMenu;
@@ -119,11 +132,10 @@ public class Main {
             siparis.applyCoupon(kupon);
         }
 
-        // ❗ Sipariş onay mesajı ARTIK BURADA YOK
-        // Kontrol tamamen Order içinde
         siparis.placeOrder();
 
         scanner.close();
     }
 }
+
 
