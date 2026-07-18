@@ -1,4 +1,4 @@
-package com.yemekstess;
+package com.yemekstes;
 // Customer entity class
 
 public class Customer extends User {

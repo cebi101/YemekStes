@@ -1,4 +1,4 @@
-package com.yemekstess;
+package com.yemekstes;
 
 public class DrinkItem extends MenuItem {
 

@@ -1,7 +1,7 @@
-import com.yemekstess.Customer;
-import com.yemekstess.DrinkItem;
-import com.yemekstess.MenuItem;
-import com.yemekstess.Order;
+import com.yemekstes.Customer;
+import com.yemekstes.DrinkItem;
+import com.yemekstes.MenuItem;
+import com.yemekstes.Order;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -51,6 +51,29 @@ class OrderTest {
         order.placeOrder();
 
         assertEquals(150, order.getTotalAmount());
+    }
+
+    @Test
+    void couponDiscount_reflectsItemsAddedAfterCoupon() {
+        Customer customer = new Customer(
+                "testUser",
+                "1234",
+                "Ali",
+                "Istanbul",
+                "05555555555",
+                "Kadikoy"
+        );
+
+        Order order = new Order(customer);
+
+        order.addItem(new MenuItem("Burger", 100));
+        order.applyCoupon("INDIRIM10");
+
+        // Kupondan SONRA eklenen ürün de indirime dahil olmalı
+        order.addItem(new MenuItem("Pizza", 100));
+
+        assertEquals(200, order.getTotalAmount());
+        assertEquals(20, order.getDiscount());
     }
 }
 

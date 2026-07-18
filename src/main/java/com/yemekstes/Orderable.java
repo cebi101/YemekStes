@@ -1,4 +1,4 @@
-package com.yemekstess;
+package com.yemekstes;
 
 public interface Orderable {
     void placeOrder();

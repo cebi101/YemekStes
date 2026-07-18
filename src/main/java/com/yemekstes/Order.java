@@ -1,4 +1,4 @@
-package com.yemekstess;
+package com.yemekstes;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,7 +8,9 @@ public class Order {
     private Customer customer;
     private List<MenuItem> items = new ArrayList<>();
     private double totalAmount = 0;
-    private double discount = 0;
+    // İndirim tutarı değil ORANI saklanır: kupondan sonra sepete ürün
+    // eklense bile indirim her zaman güncel toplam üzerinden hesaplanır.
+    private double discountRate = 0;
 
     public Order(Customer customer) {
         this.customer = customer;
@@ -22,10 +24,10 @@ public class Order {
 
     public void applyCoupon(String code) {
         if (code.equalsIgnoreCase("INDIRIM10")) {
-            discount = totalAmount * 0.10;
+            discountRate = 0.10;
             System.out.println("%10 indirim uygulandı!");
         } else if (code.equalsIgnoreCase("INDIRIM20")) {
-            discount = totalAmount * 0.20;
+            discountRate = 0.20;
             System.out.println("%20 indirim uygulandı!");
         } else {
             System.out.println("Geçersiz kupon kodu!");
@@ -46,6 +48,7 @@ public class Order {
         System.out.println("Telefon: " + customer.getPhone());
         System.out.println("Şehir: " + customer.getCity());
 
+        double discount = getDiscount();
         double finalPrice = totalAmount - discount;
 
         System.out.println("\nToplam: " + totalAmount + " TL");
@@ -77,7 +80,7 @@ public class Order {
     }
 
     public double getDiscount() {
-        return discount;
+        return totalAmount * discountRate;
     }
 }
 

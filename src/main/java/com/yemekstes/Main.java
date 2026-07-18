@@ -1,6 +1,6 @@
-package com.yemekstess;
+package com.yemekstes;
 
-import com.yemekstess.persistence.csv.OrderCsvStore;
+import com.yemekstes.persistence.csv.OrderCsvStore;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,27 +46,8 @@ public class Main {
         // Siparişi CSV listesine ekle
         orders.add(siparis);
 
-        // MENÜLER
-        List<MenuItem> foods = new ArrayList<>();
-        foods.add(new MenuItem("Burger", 80));
-        foods.add(new MenuItem("Pizza", 100));
-        foods.add(new MenuItem("Lahmacun", 65));
-        foods.add(new MenuItem("Döner", 120));
-
-        List<MenuItem> snacks = new ArrayList<>();
-        snacks.add(new MenuItem("Patates Kızartması", 35));
-        snacks.add(new MenuItem("Soğan Halkası", 30));
-
-        List<MenuItem> drinks = new ArrayList<>();
-        drinks.add(new DrinkItem("Kola", 15, "Küçük"));
-        drinks.add(new DrinkItem("Ayran", 12, "Küçük"));
-        drinks.add(new DrinkItem("Kola", 20, "Büyük"));
-        drinks.add(new DrinkItem("Ayran", 15, "Büyük"));
-        drinks.add(new DrinkItem("Ice Tea", 15, "Küçük"));
-
-        List<MenuItem> desserts = new ArrayList<>();
-        desserts.add(new MenuItem("Sufle", 45));
-        desserts.add(new MenuItem("Cheesecake", 55));
+        // Menü Restaurant sınıfında kurulur
+        Restaurant restoran = Restaurant.createDefault();
 
         while (true) {
             System.out.println("\nKategori seçiniz:");
@@ -88,19 +69,19 @@ public class Main {
 
             switch (kategori) {
                 case 1 -> {
-                    secilenMenu = foods;
+                    secilenMenu = restoran.getFoods();
                     kategoriAdi = "YEMEKLER";
                 }
                 case 2 -> {
-                    secilenMenu = snacks;
+                    secilenMenu = restoran.getSnacks();
                     kategoriAdi = "ATIŞTIRMALIKLAR";
                 }
                 case 3 -> {
-                    secilenMenu = drinks;
+                    secilenMenu = restoran.getDrinks();
                     kategoriAdi = "İÇECEKLER";
                 }
                 case 4 -> {
-                    secilenMenu = desserts;
+                    secilenMenu = restoran.getDesserts();
                     kategoriAdi = "TATLILAR";
                 }
                 default -> {

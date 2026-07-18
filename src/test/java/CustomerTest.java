@@ -1,4 +1,4 @@
-import com.yemekstess.Customer;
+import com.yemekstes.Customer;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
